@@ -5,10 +5,15 @@ const router = express.Router();
 router.get('/google', /* auth/google*/
   passport.authenticate('google', { scope: ['email', 'profile'] }));
 
-router.get('/google/callback', /* auth/callback */ passport.authenticate('google', { failureRedirect: '/user/no-permission' }),
+router.get('auth/google/callback', /* auth/callback */ passport.authenticate('google', { failureRedirect: '/user/no-permission' }),
   (req, res) => {
     res.redirect('/user/logged');
   }
 );
+
+router.get('/auth.logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
 
 module.exports = router;
